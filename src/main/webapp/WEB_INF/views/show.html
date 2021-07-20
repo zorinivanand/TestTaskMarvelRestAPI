@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Models</title>
+</head>
+<body>
+
+<p th:text="'NAME: '+${character.getName()}">VALUE</p>
+<br>
+<p th:text="'AGE: '+${characters.getPower()}">VALUE</p>
+<br>
+<a th:href="@{/WEB_INF/{id}/edit(id=${character.getId()})}">Edit.</a>
+<hr/>
+<form th:method="DELETE" th:action="@{/WEB_INF/{id}(id=${characters.getId()})}">
+    <input type="submit" value="Delete">
+</form>
+
+
+</body>
+
+<body>
+<p th:text="'Title: '+${comics.getTitle()}">VALUE</p>
+<br>
+<p th:text="'Published: '+${comics.getPublished()}">VALUE</p>
+<br>
+<p th:text="'Penciler: '+${comics.getPenciler()}">VALUE</p>
+<br>
+<p th:text="'Cover Artist: '+${comics.getCoverArtist()}">VALUE</p>
+<br>
+<p th:text="'ID: '+${comics.getId()}">VALUE</p>
+<hr/>
+<a th:href="@{/WEB_INF/{id}/edit(id=${comics.getId()})}">Edit.</a>
+<hr/>
+<form th:method="DELETE" th:action="@{/WEB_INF/{id}(id=${comics.getId()})}">
+    <input type="submit" value="Delete">
+</form>
+
+
+</body>
+</html>

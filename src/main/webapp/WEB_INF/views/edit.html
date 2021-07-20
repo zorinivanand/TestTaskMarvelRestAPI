@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Update</title>
+</head>
+<body>
+<form th:method="PATCH" th:action="@{/WEB_INF/{id}(id=${comics.getID()})}" th:object="${comics}">
+    <br>
+    <label for="title">ADD COMICS</label>
+    <br>
+    <br>
+    <br>
+    <label for="title">Enter Title: </label>
+    <input type="text" th:field="*{title}" id="title">
+    <div style="color:red" th:if="${#fields.hasErrors('title')}" th:errors="*{title}" >Title error</div>
+
+    <br>
+    <label for="published">Enter published: </label>
+    <input type="text" th:field="*{published}" id="published">
+    <div style="color:red" th:if="${#fields.hasErrors('published')}" th:errors="*{published}" >published error</div>
+
+    <br>
+    <label for="penciler">Enter penciler: </label>
+    <input type="text" th:field="*{penciler}" id="penciler">
+    <div style="color:red" th:if="${#fields.hasErrors('penciler')}" th:errors="*{penciler}" >penciler error</div>
+
+    <br>
+    <label for="coverArtist">Enter coverArtist: </label>
+    <input type="text" th:field="*{coverArtist}" id="coverArtist">
+    <div style="color:red" th:if="${#fields.hasErrors('coverArtist')}" th:errors="*{coverArtist}" >coverArtist error</div>
+
+    <br>
+    <input type="submit" value="Update...">
+</form>
+<br>
+<br>
+<label for="title">ADD CHARACTERS</label>
+<br>
+<br>
+<br>
+<form th:method="PATCH" th:action="@{/WEB_INF/{id}(id=${characters.getId()})}" th:object="${characters}">
+    <label for="name">Enter Name: </label>
+    <input type="text" th:field="*{name}" id="name">
+    <div style="color:red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}" >Name error</div>
+
+    <br>
+    <label for="power">Enter power: </label>
+    <input type="text" th:field="*{power}" id="power">
+    <div style="color:red" th:if="${#fields.hasErrors('power')}" th:errors="*{power}" >power error</div>
+
+
+
+    <br>
+    <input type="submit" value="Update...">
+</form>
+</body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>All Comics</title>
+</head>
+<body>
+
+<div id="list">
+
+    <input class="search" rel="search">SEARCH</input>
+    <br>
+    <span class="sort" rel="title">Sort by title</span>
+    <span class="sort" rel="published">Sort by published</span>
+
+</div>
+<br>
+<div th:each="comics:${views}">
+    <ul class="list">
+        <li>
+            <h3 class="name">LIST Comics</h3>
+
+    <a th:href="@{/WEB_INF/{id}(id=${comics.getId()})}"
+       th:text="${comics.getTitle()+', '+comics.getPublished()+', '+comics.getPenciler()+', '+comics.getCoverArtist()}"></a>
+        </li>
+        <br>
+        <img src="static/image/comics">
+    </ul>
+</div>
+<br/>
+<hr/>
+<a href="/comics/new">Create new comics</a>
+</body>
+</html>

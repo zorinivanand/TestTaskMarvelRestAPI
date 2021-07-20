@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>All Characters</title>
+</head>
+<body>
+
+
+<div id="list">
+
+    <input class="search" rel="search">SEARCH</input>
+    <br>
+    <span class="sort" rel="name">Sort by name</span>
+    <span class="sort" rel="power">Sort by power</span>
+
+</div>
+<br>
+<div th:each="characters:${views}">
+    <ul class="list">
+        <li>
+            <h3 class="name">LIST Characters</h3>
+        <a th:href="@{/WEB_INF/{id}(id=${characters.getId()})}"
+       th:text="${characters.getName()+', '+characters.getPower()}"></a>
+        </li>
+        <br>
+        <img src="static/image/vision">
+</div>
+<br/>
+<hr/>
+<a href="/characters/new">Create new character</a>
+</body>
+</html>
+
+
