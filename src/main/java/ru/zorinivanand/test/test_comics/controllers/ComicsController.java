@@ -1,13 +1,16 @@
 package ru.zorinivanand.test.test_comics.controllers;
 
+import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import ru.zorinivanand.test.test_comics.dao.ModelsDAO;
 import ru.zorinivanand.test.test_comics.models.Comics;
+import ru.zorinivanand.test.test_comics.service.impl.ComicsServiceImpl;
 
 import javax.validation.Valid;
+import java.awt.print.Pageable;
 
 
 @Controller
@@ -15,51 +18,44 @@ import javax.validation.Valid;
 public class ComicsController {
 
 
-    private final ModelsDAO modelsDAO;
+    private final ComicsServiceImpl comicsService;
 
-    public ComicsController (ModelsDAO modelsDAO) {
-        this.modelsDAO = modelsDAO;
+    public ComicsController(ComicsServiceImpl comicsService) {
+        this.comicsService = comicsService;
+
     }
 
     @GetMapping()
-    public String index(Model model){
-        model.addAttribute("comics",modelsDAO.index1());
-        return "comics/index";
+    public ResponseEntity<?> indexComics(Model model){
+        model.addAttribute("comics",comicsService.indexComics());
+        return new ResponseEntity<Comics>(HttpStatus.OK);
     }
     @GetMapping("/{id}")
-    public String show(@PathVariable("id")int id, Model model){
-        model.addAttribute("comics",modelsDAO.show1 (id));
-        return "comics/show";
+    public ResponseEntity<?> showComics(@RequestParam("id")int id, Model model, @PageableDefault(sort = { "id" }, direction = SpringDataWebProperties.Sort.Direction.DESC)Pageable pageable){
+        model.addAttribute("comics",comicsService.showComics (id));
+        return "comics/show" != null &&  !"comics/show".isEmpty()
+                ? new ResponseEntity<>("comics/show", HttpStatus.OK)
+                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
     @GetMapping("/new")
     public String newComics(@ModelAttribute("comics") Comics comics){
         return "comics/new";
     }
     @PostMapping()
-    public String create(@ModelAttribute("comics")@Valid Comics comics,
-                         BindingResult bindingResult){
-        if (bindingResult.hasErrors())
-            return "comics/new";
+    public ResponseEntity<?> createComics(@ModelAttribute("comics")@Valid Comics comics){
+        comicsService.saveComics(comics);
+            return new ResponseEntity<>(HttpStatus.CREATED);
 
-        modelsDAO.save1(comics);
-        return "redirect:/comics";
     }
 
-    @GetMapping("/{id}/edit")
-    public String edit(Model model, @PathVariable("id") int id) {
-        model.addAttribute("comics",modelsDAO.show1(id));
-        return "comics/edit";
-    }
     @PatchMapping("/{id}")
-    public String update(@ModelAttribute("comics")@Valid Comics comics, BindingResult bindingResult,@PathVariable("id") int id){
-        if (bindingResult.hasErrors())
-            return "comics/edit";
-        modelsDAO.update1 (id,comics);
-        return "redirect:/comics";
+    public ResponseEntity<?> updateComics(@ModelAttribute("comics")@Valid Comics comics,@PathVariable("id") int id){
+        comicsService.updateComics (id,comics);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
     @DeleteMapping("/{id}")
-    public String delete(@PathVariable("id") int id){
-        modelsDAO.delete1 (id);
-        return "redirect:/comics";
+    public ResponseEntity<?> deleteComics(@PathVariable("id") int id){
+        comicsService.deleteComics (id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

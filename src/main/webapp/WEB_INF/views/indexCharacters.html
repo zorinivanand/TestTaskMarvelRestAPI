@@ -5,7 +5,7 @@
     <title>All Characters</title>
 </head>
 <body>
-
+<import pager.ftl as p>
 
 <div id="list">
 
@@ -15,7 +15,10 @@
     <span class="sort" rel="power">Sort by power</span>
 
 </div>
+
 <br>
+    <p.pager url page />
+    <br>
 <div th:each="characters:${views}">
     <ul class="list">
         <li>
@@ -26,9 +29,15 @@
         <br>
         <img src="static/image/vision">
 </div>
+
+
+
+
 <br/>
 <hr/>
 <a href="/characters/new">Create new character</a>
+    <br>
+    <p.pager url page />
 </body>
 </html>
 
